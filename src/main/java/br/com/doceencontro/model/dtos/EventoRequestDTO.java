@@ -20,7 +20,8 @@ public record EventoRequestDTO(
 		@NotBlank(message = MensagemErro.OBRIGATORIO)
 		String tipo, 
 		
-		@NotNull(message = MensagemErro.OBRIGATORIO) @Future(message = MensagemErro.FUTURO)
+		@NotNull(message = MensagemErro.OBRIGATORIO)
+		// @Future(message = MensagemErro.FUTURO)
 		LocalDateTime data, 
 		
 		String local, 
