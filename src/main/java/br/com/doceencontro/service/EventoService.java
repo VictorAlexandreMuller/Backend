@@ -1,5 +1,6 @@
 package br.com.doceencontro.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -170,10 +171,14 @@ public class EventoService {
 		return "Participação removida com sucesso.";
 	}
 
-	public List<EventoResponseDTO> listarAtivos(String usuarioId) {
-		return converterDtos(eventoRepository.listarEventosAtivos(usuarioId));
+	public List<EventoResponseDTO> listarAtivos(String usuarioId) {		
+		return converterDtos(eventoRepository.listarEventosAtivos(usuarioId, LocalDateTime.now().minusDays(14)));
 	}
-
+	
+	public List<EventoResponseDTO> listarPassados(String usuarioId) {		
+		return converterDtos(eventoRepository.listarEventosPassados(usuarioId, LocalDateTime.now().minusDays(14)));
+	}
+	
 	public List<String> tiposDeEvento() {
 		Tipo[] tipos = Tipo.values();
 		List<String> tiposString = new ArrayList<String>();

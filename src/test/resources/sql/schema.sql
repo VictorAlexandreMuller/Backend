@@ -30,6 +30,7 @@ CREATE TABLE IF NOT EXISTS `test-db`.`eventos` (
   `descricao` TEXT NULL,
   `tipo` VARCHAR(30) NULL,
   `data` DATETIME NOT NULL,
+  `ativo` BOOLEAN NOT NULL DEFAULT true,
   `usuario_id` VARCHAR(36) NOT NULL,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`usuario_id`) REFERENCES `test-db`.`usuarios`(`id`) ON DELETE CASCADE

@@ -44,7 +44,12 @@ public class EventoController {
 	public List<EventoResponseDTO> listarAtivos() {
 		return eventoService.listarAtivos(IdToken.get());
 	}
-
+	
+	@GetMapping("/passados")
+	public List<EventoResponseDTO> listarPassados() {
+		return eventoService.listarPassados(IdToken.get());
+	}
+	
 	@GetMapping("/tipos")
 	public List<String> tiposDeEvento() {
 		return eventoService.tiposDeEvento();

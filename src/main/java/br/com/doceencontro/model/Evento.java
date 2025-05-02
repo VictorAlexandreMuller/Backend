@@ -3,6 +3,8 @@ package br.com.doceencontro.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.Where;
+
 import br.com.doceencontro.model.dtos.EventoRequestDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -26,6 +28,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Where(clause = "ativo = true")
 @Entity
 @Table(name = "eventos")
 public class Evento {
