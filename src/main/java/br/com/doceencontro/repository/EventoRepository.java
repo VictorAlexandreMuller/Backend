@@ -36,7 +36,11 @@ public interface EventoRepository extends JpaRepository<Evento, String> {
 	// + "WHERE u.id = :usuarioId AND e.data >= CURRENT_TIMESTAMP")
 	// List<Evento> listarEventosAtivos(String usuarioId);
 
-	@Query("SELECT e FROM Evento e WHERE e.organizador.id = :usuarioId AND e.data >= CURRENT_TIMESTAMP AND e.ativo = true")
-	List<Evento> listarEventosAtivos(String usuarioId);
+	@Query("SELECT e FROM Usuario u JOIN u.eventosParticipados e "
+			+ "WHERE u.id = :usuarioId AND e.data >= :data")
+	List<Evento> listarEventosAtivos(String usuarioId, LocalDateTime data);
 
+	@Query("SELECT e FROM Usuario u JOIN u.eventosParticipados e "
+			+ "WHERE u.id = :usuarioId AND e.data <= :data")
+	List<Evento> listarEventosPassados(String usuarioId, LocalDateTime data);
 }
