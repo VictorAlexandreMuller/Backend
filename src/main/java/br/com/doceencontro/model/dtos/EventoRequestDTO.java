@@ -10,11 +10,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record EventoRequestDTO(
-		@NotBlank(message = MensagemErro.OBRIGATORIO) @Length(min = 10, message = MensagemErro.MIN) 
+		@NotBlank(message = MensagemErro.OBRIGATORIO) @Length(min = 5, message = MensagemErro.MIN) 
 		@Length(max = 100, message = MensagemErro.MAX)
 		String titulo, 
 		
-		@NotBlank(message = MensagemErro.OBRIGATORIO) @Length(min = 10, message = MensagemErro.MIN)
 		String descricao, 
 		
 		@NotBlank(message = MensagemErro.OBRIGATORIO)
