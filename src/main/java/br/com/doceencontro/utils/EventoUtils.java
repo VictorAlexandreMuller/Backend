@@ -1,11 +1,13 @@
 package br.com.doceencontro.utils;
 
+import java.util.List;
 import java.util.Optional;
 
 import br.com.doceencontro.exception.exceptions.JaParticipandoException;
 import br.com.doceencontro.exception.exceptions.NotParticipandoException;
 import br.com.doceencontro.model.Evento;
 import br.com.doceencontro.model.Usuario;
+import br.com.doceencontro.model.dtos.UsuarioResponseDTO;
 
 public class EventoUtils {
 
@@ -48,6 +50,5 @@ public class EventoUtils {
 		return false;
 		
 	}
-	
 	
 }

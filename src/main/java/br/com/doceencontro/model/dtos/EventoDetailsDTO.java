@@ -24,7 +24,7 @@ public class EventoDetailsDTO {
     private Boolean ativo;
     private Endereco endereco;
     private UsuarioResponseDTO organizador;
-    private List<RequisitoResponseDTO> requisitos;
+    private List<RequisitoResponseDTO> presentes;
     private List<UsuarioResponseDTO> participantes = new ArrayList<>();
     private List<UsuarioResponseDTO> convidados = new ArrayList<>();
 
@@ -39,7 +39,7 @@ public class EventoDetailsDTO {
         this.data = evento.getData().format(dtf);
         this.ativo = evento.getAtivo();
         this.endereco = evento.getEndereco();
-        this.requisitos = evento.getRequisitos().stream()
+        this.presentes = evento.getRequisitos().stream()
                 .map(RequisitoResponseDTO::new)
                 .collect(Collectors.toList());
         this.organizador = new UsuarioResponseDTO(evento.getOrganizador());
