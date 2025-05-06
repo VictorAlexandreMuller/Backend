@@ -5,6 +5,7 @@ import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -30,12 +31,12 @@ public class Convite {
 	
 	private String descricao;
 	
-	@ManyToMany()
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "convite_usuario",
 	joinColumns = @JoinColumn(name = "convite_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
 	private Set<Usuario> destinatarios;
 
-	@OneToOne()
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "evento_id", referencedColumnName = "id")
 	private Evento evento;
 

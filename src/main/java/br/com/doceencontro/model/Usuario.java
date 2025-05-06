@@ -35,43 +35,40 @@ public class Usuario implements UserDetails {
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id;
-	
+
 	private String nome;
-	
+
 	private String email;
-	
+
 	private String senha;
-	
+
 	private LocalDateTime criadoEm;
-	
+
 	@OneToMany(mappedBy = "usuario")
 	private List<Amizade> listaAmigos;
-	
-	@OneToMany(mappedBy = "organizador", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
+
+	@OneToMany(mappedBy = "organizador", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Evento> eventosCriados;
-	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+
+	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "usuario_evento", 
 	joinColumns = @JoinColumn(name = "usuarios_id"),
 	inverseJoinColumns = @JoinColumn(name = "eventos_id"))
 	private List<Evento> eventosParticipados;
-	
-	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<DataEspecial> datasDataEspeciais;
-	
-	@ManyToMany(mappedBy = "usuarios", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+
+	@ManyToMany(mappedBy = "usuarios", cascade = CascadeType.ALL)
 	private List<Notificacao> notificacoes;
-	
+
 	@ManyToMany(mappedBy = "responsaveis")
 	private List<Requisito> requisitosEntregues;
-	
-	@ManyToMany(mappedBy = "usuarios")
+
+	@ManyToMany(mappedBy = "usuarios", fetch = FetchType.LAZY)
 	private List<Chat> chats;
-	
+
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
 	private List<Mensagem> mensagens;
-	
-	@ManyToMany(mappedBy = "destinatarios", cascade = CascadeType.PERSIST)
+
+	@ManyToMany(mappedBy = "destinatarios", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private List<Convite> convites;
 	
 	public Usuario editar(Usuario usuarioEditado) {

@@ -1,6 +1,9 @@
 package br.com.doceencontro.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -21,6 +24,11 @@ public class RequisitoController {
 
 	public RequisitoController(RequisitoService service) {
 		this.service = service;
+	}
+	
+	@GetMapping("/{eventoId}")
+	public List<RequisitoResponseDTO> buscarRequisitos(@PathVariable String eventoId) {
+		return service.buscarRequisitos(eventoId);
 	}
 	
 	@PostMapping("/{eventoId}")

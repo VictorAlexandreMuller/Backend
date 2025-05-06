@@ -15,6 +15,7 @@ import br.com.doceencontro.model.Evento;
 import br.com.doceencontro.model.dtos.EventoDetailsDTO;
 import br.com.doceencontro.model.dtos.EventoRequestDTO;
 import br.com.doceencontro.model.dtos.EventoResponseDTO;
+import br.com.doceencontro.model.dtos.UsuarioResponseDTO;
 import br.com.doceencontro.service.EventoService;
 import br.com.doceencontro.utils.EventoUtils;
 import br.com.doceencontro.utils.IdToken;
@@ -53,6 +54,11 @@ public class EventoController {
 	@GetMapping("/tipos")
 	public List<String> tiposDeEvento() {
 		return eventoService.tiposDeEvento();
+	}
+	
+	@GetMapping("/participantes/{eventoId}")
+	public List<UsuarioResponseDTO> listarParticipantes(@PathVariable String eventoId) {
+		return eventoService.buscarParticipantes(eventoId);
 	}
 
 	@PostMapping

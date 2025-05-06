@@ -1,5 +1,6 @@
 package br.com.doceencontro.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
@@ -11,9 +12,12 @@ import br.com.doceencontro.model.Requisito;
 import br.com.doceencontro.model.Usuario;
 import br.com.doceencontro.model.dtos.RequisitoResponseDTO;
 import br.com.doceencontro.repository.RequisitoRepository;
+import br.com.doceencontro.utils.ConversorDTO;
 import br.com.doceencontro.utils.EventoUtils;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class RequisitoService {
 
 	private RequisitoRepository repository;
@@ -21,13 +25,6 @@ public class RequisitoService {
 	private EventoService eventoService;
 
 	private UsuarioService usuarioService;
-
-	public RequisitoService(RequisitoRepository repository, EventoService eventoService,
-			UsuarioService usuarioService) {
-		this.eventoService = eventoService;
-		this.repository = repository;
-		this.usuarioService = usuarioService;
-	}
 
 	public Requisito findById(String id) {
 		Optional<Requisito> buscarRequisito = repository.findById(id);
@@ -61,7 +58,7 @@ public class RequisitoService {
 	}
 
 	public String excluirRequisito(String requisitoId) {
-		Requisito buscarRequisito = findById(requisitoId);
+		findById(requisitoId);
 
 		repository.excluir(requisitoId);
 
@@ -94,6 +91,10 @@ public class RequisitoService {
 		buscarRequisito.removerResponsavel(buscarUsuario);
 
 		return converterDTO(repository.save(buscarRequisito));
+	}
+
+	public List<RequisitoResponseDTO> buscarRequisitos(String eventoId) {
+		return ConversorDTO.requisitos(eventoService.findById(eventoId).getRequisitos());
 	}
 
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.doceencontro.model.Usuario;
 import br.com.doceencontro.model.dtos.ConviteResponseDTO;
+import br.com.doceencontro.model.dtos.EventoResponseDTO;
 import br.com.doceencontro.model.dtos.UsuarioDetailsDTO;
 import br.com.doceencontro.model.dtos.UsuarioResponseDTO;
 import br.com.doceencontro.service.ConviteService;
@@ -47,6 +48,16 @@ public class UsuarioController {
 	@GetMapping("/convites")
 	public List<ConviteResponseDTO> listarConvitesUsuario() {
 		return conviteService.listarConvitesUsuario(IdToken.get());
+	}
+	
+	@GetMapping("/criados")
+	public List<EventoResponseDTO> listarEventosCriados() {
+		return usuarioService.listarEventosCriados(IdToken.get());
+	}
+	
+	@GetMapping("/participados")
+	public List<EventoResponseDTO> listarEventosParticipados() {
+		return usuarioService.listarEventosParticipados(IdToken.get());
 	}
 	
 	@GetMapping("/isParticipando/{eventoId}")

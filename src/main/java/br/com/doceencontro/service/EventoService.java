@@ -22,9 +22,12 @@ import br.com.doceencontro.model.Usuario;
 import br.com.doceencontro.model.dtos.EventoDetailsDTO;
 import br.com.doceencontro.model.dtos.EventoRequestDTO;
 import br.com.doceencontro.model.dtos.EventoResponseDTO;
+import br.com.doceencontro.model.dtos.UsuarioResponseDTO;
 import br.com.doceencontro.repository.EnderecoRepository;
 import br.com.doceencontro.repository.EventoRepository;
+import br.com.doceencontro.utils.ConversorDTO;
 import br.com.doceencontro.utils.EventoUtils;
+import jakarta.persistence.Convert;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -65,16 +68,8 @@ public class EventoService {
 		return new EventoDetailsDTO(evento);
 	}
 
-	private EventoResponseDTO converterDto(Evento evento) {
-		return new EventoResponseDTO(evento);
-	}
-
-	private List<EventoResponseDTO> converterDtos(List<Evento> evento) {
-		return evento.stream().map(e -> new EventoResponseDTO(e)).collect(Collectors.toList());
-	}
-
 	public List<EventoResponseDTO> obterTodos() {
-		return converterDtos(eventoRepository.findAll());
+		return ConversorDTO.eventos(eventoRepository.findAll());
 	}
 
 	public EventoDetailsDTO obterPorId(String id) {
@@ -113,7 +108,7 @@ public class EventoService {
 
 		Evento eventoEditado = eventoRepository.save(buscarEvento.editar(eventoDTO));
 
-		return converterDto(eventoEditado);
+		return ConversorDTO.evento(eventoEditado);
 	}
 
 	@Transactional
@@ -178,11 +173,11 @@ public class EventoService {
 	}
 
 	public List<EventoResponseDTO> listarAtivos(String usuarioId) {		
-		return converterDtos(eventoRepository.listarEventosAtivos(usuarioId, LocalDateTime.now().minusDays(14)));
+		return ConversorDTO.eventos(eventoRepository.listarEventosAtivos(usuarioId, LocalDateTime.now().minusDays(14)));
 	}
 	
 	public List<EventoResponseDTO> listarPassados(String usuarioId) {		
-		return converterDtos(eventoRepository.listarEventosPassados(usuarioId, LocalDateTime.now().minusDays(14)));
+		return ConversorDTO.eventos(eventoRepository.listarEventosPassados(usuarioId, LocalDateTime.now().minusDays(14)));
 	}
 	
 	public List<String> tiposDeEvento() {
@@ -206,6 +201,10 @@ public class EventoService {
 		eventoRepository.save(evento);
 
 		return "Evento desativado com sucesso.";
+	}
+	
+	public List<UsuarioResponseDTO> buscarParticipantes(String eventoId) {
+		return ConversorDTO.usuarios(findById(eventoId).getParticipantes());
 	}
 
 }

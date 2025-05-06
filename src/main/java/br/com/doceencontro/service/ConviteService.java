@@ -3,17 +3,21 @@ package br.com.doceencontro.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import br.com.doceencontro.exception.exceptions.JaParticipandoException;
 import br.com.doceencontro.exception.exceptions.UsuarioNotFoundException;
 import br.com.doceencontro.model.Convite;
 import br.com.doceencontro.model.Evento;
 import br.com.doceencontro.model.Usuario;
 import br.com.doceencontro.model.dtos.ConviteDTO;
 import br.com.doceencontro.model.dtos.ConviteResponseDTO;
+import br.com.doceencontro.model.dtos.UsuarioResponseDTO;
 import br.com.doceencontro.repository.ConviteRepository;
+import br.com.doceencontro.utils.ConversorDTO;
 import br.com.doceencontro.utils.EventoUtils;
 
 @Service
@@ -61,13 +65,17 @@ public class ConviteService {
 
 		Evento evento = eventoService.findById(eventoId);
 
-		usuariosIds.forEach(usuarioId -> {
-			try {
-				if (!EventoUtils.isParticipando(evento, usuarioId) && !EventoUtils.verificarAutor(usuarioId, evento)) {
-					usuarios.add(usuarioService.findById(usuarioId));
-				}
-			} catch (UsuarioNotFoundException e) {}
-		});
+		Set<String> idsParticipantes = evento.getParticipantes().stream()
+			    .map(Usuario::getId).collect(Collectors.toSet());
+			String autorId = evento.getOrganizador().getId();
+
+			usuariosIds.forEach(usuarioId -> {
+			    if (!idsParticipantes.contains(usuarioId) && !usuarioId.equals(autorId)) {
+			        try {
+			            usuarios.add(usuarioService.findById(usuarioId));
+			        } catch (UsuarioNotFoundException e) {}
+			    }
+			});
 		
 		evento.getConvite().enviarConvite(usuarios);
 
@@ -78,5 +86,9 @@ public class ConviteService {
 
 	public List<ConviteResponseDTO> listarConvitesUsuario(String destinatarioId) {
 		return converterDtos(conviteRepository.findByDestinatariosId(destinatarioId));
+	}
+
+	public List<UsuarioResponseDTO> buscarConvidados(String eventoId) {
+		return ConversorDTO.usuariosSet(eventoService.findById(eventoId).getConvite().getDestinatarios());
 	}
 }

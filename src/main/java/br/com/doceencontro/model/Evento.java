@@ -59,16 +59,16 @@ public class Evento {
 	@ManyToMany(mappedBy = "eventosParticipados")
 	private List<Usuario> participantes;
 
-	@OneToMany(mappedBy = "evento", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "evento", cascade = CascadeType.ALL)
 	private List<Arquivo> arquivos;
 
 	@OneToMany(mappedBy = "evento")
 	private List<Requisito> requisitos;
 
-	@OneToOne(mappedBy = "evento", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "evento", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Chat chat;
 
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "evento")
+	@OneToOne(mappedBy = "evento", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Convite convite;
 
 	public Evento editar(EventoRequestDTO eventoDTO) {

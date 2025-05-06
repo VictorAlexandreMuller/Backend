@@ -16,17 +16,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "datas_especiais")
 public class DataEspecial {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.UUID)
 	private String id;
 	
 	private LocalDateTime data;
 	
-	@ManyToOne
-	@JoinColumn(name = "usuarios_id")
+//	@ManyToOne
+//	@JoinColumn(name = "usuarios_id")
 	private Usuario usuario;
 }
