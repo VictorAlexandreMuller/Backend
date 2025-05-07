@@ -45,6 +45,10 @@ public class ConversorDTO {
 	public static UsuarioDetailsDTO usuarioDetails(Usuario usuario) {
 		return new UsuarioDetailsDTO(usuario);
 	}
+	
+	public static RequisitoResponseDTO requisito(Requisito requisito) {
+		return new RequisitoResponseDTO(requisito);
+	}
 
 	public static List<RequisitoResponseDTO> requisitos(List<Requisito> requisitos) {
 		return requisitos.stream().map(RequisitoResponseDTO::new).collect(Collectors.toList());

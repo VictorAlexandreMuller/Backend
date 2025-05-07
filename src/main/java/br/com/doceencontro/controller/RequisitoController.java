@@ -32,12 +32,12 @@ public class RequisitoController {
 	}
 	
 	@PostMapping("/{eventoId}")
-	public Requisito criarRequisito(@RequestBody Requisito requisito, @PathVariable String eventoId) {
+	public RequisitoResponseDTO criarRequisito(@RequestBody Requisito requisito, @PathVariable String eventoId) {
 		return service.criarRequisito(requisito, eventoId);
 	}
 	
 	@PutMapping("/{requisitoId}")
-	public Requisito editarRequisito(@RequestBody Requisito requisito, @PathVariable String requisitoId) {
+	public RequisitoResponseDTO editarRequisito(@RequestBody Requisito requisito, @PathVariable String requisitoId) {
 		return service.editarRequisito(requisito, requisitoId);
 	}
 	

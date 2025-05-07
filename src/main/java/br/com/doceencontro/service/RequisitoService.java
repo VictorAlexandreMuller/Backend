@@ -36,25 +36,21 @@ public class RequisitoService {
 		return buscarRequisito.get();
 	}
 
-	private RequisitoResponseDTO converterDTO(Requisito requisito) {
-		return new RequisitoResponseDTO(requisito);
-	}
-
-	public Requisito criarRequisito(Requisito requisito, String eventoId) {
+	public RequisitoResponseDTO criarRequisito(Requisito requisito, String eventoId) {
 		Evento buscarEvento = eventoService.findById(eventoId);
 
 		buscarEvento.addRequisito(requisito);
 
-		return repository.save(requisito);
+		return ConversorDTO.requisito(repository.save(requisito));
 	}
 
-	public Requisito editarRequisito(Requisito requisitoEditado, String requisitoId) {
+	public RequisitoResponseDTO editarRequisito(Requisito requisitoEditado, String requisitoId) {
 		Requisito buscarRequisito = findById(requisitoId);
 
 		buscarRequisito.setTitulo(requisitoEditado.getTitulo());
 		buscarRequisito.setDescricao(requisitoEditado.getDescricao());
 
-		return repository.save(buscarRequisito);
+		return ConversorDTO.requisito(repository.save(buscarRequisito));
 	}
 
 	public String excluirRequisito(String requisitoId) {
@@ -76,7 +72,7 @@ public class RequisitoService {
 
 		buscarRequisito.adicionarResponsavel(buscarUsuario);
 
-		return converterDTO(repository.save(buscarRequisito));
+		return ConversorDTO.requisito(repository.save(buscarRequisito));
 	}
 
 	public RequisitoResponseDTO removerResponsavel(String requisitoId, String usuarioId) {
@@ -90,7 +86,7 @@ public class RequisitoService {
 
 		buscarRequisito.removerResponsavel(buscarUsuario);
 
-		return converterDTO(repository.save(buscarRequisito));
+		return ConversorDTO.requisito(repository.save(buscarRequisito));
 	}
 
 	public List<RequisitoResponseDTO> buscarRequisitos(String eventoId) {

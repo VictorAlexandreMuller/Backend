@@ -1,0 +1,31 @@
+services:
+  db:
+    image: mysql:latest
+    container_name: doce-encontro-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DCEN_DB_PASS}
+      MYSQL_DATABASE: ${DCEN_DB}
+    ports:
+      - 3307:3306
+    volumes:
+      - db_data:/var/lib/mysql
+  backend:
+    build: .
+    container_name: doce-encontro-backend
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/${DCEN_DB}
+      SPRING_DATASOURCE_USERNAME: ${DCEN_DB_USER}
+      SPRING_DATASOURCE_PASSWORD: ${DCEN_DB_PASS}
+      DCEN_EMAIL: ${DCEN_EMAIL}
+      DCEN_EMAIL_PASS: ${DCEN_EMAIL_PASS}
+      DCEN_PASS: ${DCEN_PASS}
+      HOST: ${HOST}
+    ports:
+      - 8080:8080
+    stdin_open: true
+    tty: true
+volumes:
+  db_data: null

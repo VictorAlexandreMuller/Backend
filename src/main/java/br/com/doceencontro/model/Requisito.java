@@ -1,5 +1,6 @@
 package br.com.doceencontro.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -41,7 +42,7 @@ public class Requisito {
 
 	@ManyToMany(cascade = CascadeType.PERSIST)
 	@JoinTable(name = "requisito_usuario", joinColumns = @JoinColumn(name = "requisito_id"), inverseJoinColumns = @JoinColumn(name = "usuario_id"))
-	private List<Usuario> responsaveis;
+	private List<Usuario> responsaveis = new ArrayList<Usuario>();
 
 	public void adicionarResponsavel(Usuario responsavel) {
 		this.responsaveis.add(responsavel);
